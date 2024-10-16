@@ -3,7 +3,7 @@ name: Install, Enable, and Start Redis on Servers
 on: [push]
 
 jobs:
-  install-enable-start-redis:
+  ssh-into-servers:
     runs-on: ubuntu-22.04
     env:
       SSH_HOST: ${{ secrets.PROD_USER }}@${{ secrets.PROD_SERVER }}
@@ -24,13 +24,23 @@ jobs:
       - run: ssh ${{ steps.ssh.outputs.SERVER }} pwd
 
       
-      - name: Install Redis-server
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+        
+      - name: Setu-up the Redis-server
       - uses: shogo82148/actions-setup-redis@v1
         with:
-          redis-version: ">=7"
+          distribution: "valkey"
+          redis-version: "7.2"
       - run: |
           sudo apt update && sudo apt upgrade -y
           sudo apt install redis-server -y
+          sudo systemctl enable redis-server
+          sudo systemctl start redis-sever
+
+
+      - name : verify redis-server is up and running
           redis-cli ping
           redis-cli -h 127.0.0.1 -p ${{ steps.setup.outputs.redis-port }} ping
 
