@@ -1,4 +1,4 @@
-name: Install, Enable, and Start Redis on Servers
+name: SSH into servers
 
 on: [push]
 
