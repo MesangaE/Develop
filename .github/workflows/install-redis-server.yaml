@@ -11,11 +11,11 @@ jobs:
     steps:
     - name: Install, Enable, Start Redis, and Restart Server
       run: |
-        echo "${SSH_PRIVATE_KEY}" > ssh_key.pem
-        chmod 400 ssh_key.pem
-        ssh -vvv -i ssh_key.pem user@${{ secrets.DEV_SERVER}} && user@${{ secrets.DEV_SERVER}}
+        echo "${SSH_PRIVATE_KEY}" > devpair.pem
+        chmod 400 devpair.pem
+        ssh -vvv -i devpair.pem user@${{ secrets.DEV_SERVER}} && user@${{ secrets.DEV_SERVER}}
 
-        ssh -i ssh_key.pem -o StrictHostKeyChecking=no user@${{ secrets.DEV_SERVER}} '
+        ssh -i devpair.pem -o StrictHostKeyChecking=no user@${{ secrets.DEV_SERVER}} '
           sudo apt update &&
           sudo apt install redis-server &&
           sudo systemctl enable redis-server &&
