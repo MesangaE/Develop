@@ -1,0 +1,31 @@
+name: Install, Enable, and Start Redis on Servers
+
+on: [push]
+
+jobs:
+  install-enable-start-redis:
+    runs-on: ubuntu-22.04
+    env:
+      server: ${{ secrets.PROD_USER }}@${{ secrets.PROD_SERVER }}
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    steps:
+    - name: Install, Enable, Start Redis, and Restart Server
+      run: |
+        echo "${SSH_PRIVATE_KEY}" > ssh_key.pem
+        chmod 600 ssh_key.pem
+
+        ssh -i ssh_key.pem -o StrictHostKeyChecking=no user@${{ secrets.DEV_SERVER}} '
+          sudo apt update &&
+          sudo apt install redis-server &&
+          sudo systemctl enable redis-server &&
+          sudo systemctl start redis-server &&
+          sudo systemctl restart redis-server
+        '
+
+        ssh -i ssh_key.pem -o StrictHostKeyChecking=no user@${{ secrets.PROD_SERVER}} '
+          sudo apt update &&
+          sudo apt install redis-server &&
+          sudo systemctl enable redis-server &&
+          sudo systemctl start redis-server &&
+          sudo systemctl restart redis-server
+        '
