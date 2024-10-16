@@ -11,6 +11,10 @@ jobs:
     steps:
     - name: Install, Enable, Start Redis, and Restart Server
       run: |
+        touch /home/runner/.ssh/known_hosts2
+        chmod 600 /home/runner/.ssh/known_hosts2
+        ssh -o UserKnownHostsFile=/home/runner/.ssh/known_hosts2 user@ubuntu
+        ssh -vvv user@ubuntu
         echo "${SSH_PRIVATE_KEY}" > devpair.pem
         chmod 400 devpair.pem
         ssh -vvv -i devpair.pem user@${{ secrets.DEV_SERVER}} && user@${{ secrets.DEV_SERVER}}
