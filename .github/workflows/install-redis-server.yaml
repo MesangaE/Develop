@@ -22,14 +22,14 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
     
       - run: ssh ${{ steps.ssh.outputs.SERVER }} pwd
-
       - name: Install Redis-server
       - uses: actions/checkout@v4
       - uses: shogo82148/actions-setup-redis@v1
         with:
           redis-version: ">=7"
-      - run: redis-cli ping
+      
       - run: |
+          redis-cli ping
           redis-cli -h 127.0.0.1 -p ${{ steps.setup.outputs.redis-port }} ping
 
    
