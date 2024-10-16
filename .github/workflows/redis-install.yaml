@@ -1,0 +1,19 @@
+name: Setup Redis  
+
+on: [push]  
+
+jobs:  
+  setup-redis:  
+    runs-on: ${{ secrets.DEV_SERVER }} 
+    steps:  
+      - name: Checkout repository  
+        uses: actions/checkout@v2  
+        
+      - name: Set up Redis  
+        uses: shogo82148/actions-setup-redis@v1  
+        with:  
+          distribution: "valkey"  
+          redis-version: "7.2"  
+
+      - name: Verify that Redis is up  
+        run: redis-cli ping
