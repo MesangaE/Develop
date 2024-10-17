@@ -2,7 +2,7 @@ name: Install Redis Server
 on: [push]
 
 env:
-  SSH_HOST: ${{ secrets.PROD_USER }}@${{ secrets.PROD_SERVER }}
+  SSH_HOST: ${{ secrets.Dev_USER }}
   SSH_KEY: ${{ secrets.SSH_KEY }}
   SSH_PORT: ${{ secrets.SSH_PORT }}
   SSH_USER: ${{ secrets.SSH_USER }}
@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Redis
         run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.PROD_USER }}@${{ secrets.PROD_SERVER }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.DEV_USER }}@${{ secrets.DEV_SERVER }} << 'EOF'
             sudo apt update
             sudo apt upgrade -y
             sudo apt-get install -y lsb-release curl gnupg
