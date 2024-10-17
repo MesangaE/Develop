@@ -27,7 +27,7 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > private_key.pem
           chmod 400 private_key.pem
           ls -la
-          scp -i private_key.pem -o StrictHostKeyChecking=no \${{ secrets.DEV_SERVER }}
+          scp -i private_key.pem -o StrictHostKeyChecking=no local_file ${secrets.DEV_SERVER}:remote_path
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.DEV_SERVER  }} 
           ssh ${{ steps.ssh.outputs.SERVER }} pwd
           sudo apt update
