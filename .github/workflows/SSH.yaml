@@ -12,6 +12,8 @@ jobs:
       SSH_USER: ${{ secrets.SSH_USER }}
 
     steps:
+      - name: check out code
+        uses: actions/checkout@v4
       - id: ssh
         uses: invi5H/ssh-action@v1
         with:
