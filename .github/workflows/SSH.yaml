@@ -6,7 +6,7 @@ jobs:
   ssh-into-servers:
     runs-on: ubuntu-22.04
     env:
-      SSH_HOST: ${{ secrets.PROD_USER }}@${{ secrets.PROD_SERVER }}
+      SSH_HOST: ${{ secrets.DEV_USER }}
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_PORT: ${{ secrets.SSH_PORT }}
       SSH_USER: ${{ secrets.SSH_USER }}
